@@ -10,7 +10,7 @@ public interface userDao {
     public int update (User user) throws SQLException;
     public int delete (User userId) throws SQLException;
     public User select (String userName, String Password) throws SQLException;
-    public User insert (String userName, String fname, String lname, String email, String password) throws SQLException;
+    public User insert (String userName, String email, String password) throws SQLException;
 
 
 }

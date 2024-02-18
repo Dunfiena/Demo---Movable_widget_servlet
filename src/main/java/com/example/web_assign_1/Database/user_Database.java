@@ -15,10 +15,9 @@ import static com.example.web_assign_1.Database.database_connection.*;
 public class user_Database implements userDao {
 
     private static final String SQL_SELECT = "SELECT * FROM user";
-    private static final String SQL_SELECT_ONE = "SELECT * FROM user WHERE userId = ?";
     private static final String SQL_SELECT_login = "SELECT * FROM user WHERE userName = ? AND hashpass = ?";
 
-    private static final String SQL_INSERT = "INSERT INTO user(userId, userName, firstName, lastName, email, hashpass) VALUES (?,?,?,?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO user(userName, email, hashpass) VALUES (?,?,?)";
     private static final String SQL_UPDATE = "UPDATE user SET userName=?, firstName=?, lastName=?, email=?, hashpass=? WHERE userId = ?";
     private static final String SQL_DELETE = "DELETE FROM user WHERE userId = ?";
 
@@ -66,30 +65,47 @@ public class user_Database implements userDao {
         return user;
     }
 
+    public User select(int userId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        User user = null;
+
+        try {
+            conn = getConnection();
+            stmt = conn.prepareStatement("SELECT * FROM user WHERE userId =?");
+            stmt.setInt(1, userId);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                user = new User(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4)
+                );
+                return user;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
+    }
 
     @Override
-    public User insert(String userName, String fname, String lname, String email, String password) throws SQLException {
+    public User insert(String userName, String email, String password) throws SQLException {
         Connection conn = null;
         PreparedStatement pStatement = null;
         ResultSet rs = null;
 
-        List<User> users = new ArrayList<>();
 
         try{
             conn = getConnection();
-            pStatement = conn.prepareStatement(SQL_SELECT);
-            rs = pStatement.executeQuery();
-
-            while (rs.next()){
-
-                users.add(new User(
-                        rs.getInt("userId"),
-                        rs.getString("userName"),
-                        rs.getString("email"),
-                        rs.getString("hashpass"))
-                );
-
-            }
+            pStatement = conn.prepareStatement("INSERT INTO user(userName, email, hashpass) VALUES (?,?,?)");
+            pStatement.setString(1, userName);
+            pStatement.setString(2, email);
+            pStatement.setString(3, password);
+            pStatement.executeUpdate();
 
         }catch (Exception ex){
             System.out.println("Error:" + ex.getMessage());

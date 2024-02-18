@@ -20,4 +20,31 @@
         <servlet-name>regServe</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>taskServlet</servlet-name>
+        <servlet-class>com.example.web_assign_1.taskServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>taskServlet</servlet-name>
+        <url-pattern>/addTask</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteServlet</servlet-name>
+        <servlet-class>com.example.web_assign_1.taskServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteServlet</servlet-name>
+        <url-pattern>/deleteTask</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>editTask</servlet-name>
+        <servlet-class>com.example.web_assign_1.taskServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editTask</servlet-name>
+        <url-pattern>/editTask</url-pattern>
+    </servlet-mapping>
 </web-app>

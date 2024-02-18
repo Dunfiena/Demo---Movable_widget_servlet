@@ -49,32 +49,17 @@ public class loginServlet extends HttpServlet {
         String password = request.getParameter("hashpass");
 
         task_Database tdb = new task_Database();
-        ArrayList<Task> tasks = null;
+        ArrayList<Task> tasks;
 
         user_Database udb = new user_Database();
         User user = udb.select(username, password);
+        tasks = tdb.selectAll(user.getUser_id());
 
-//        try {
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        if (user == null) {
-//
-//        } else {
-//            try {
-//                tasks = tdb.selectAll(user.getUser_id());
-//            } catch (SQLException e) {
-//                throw new RuntimeException(e);
-//            }
-//            request.setAttribute("tasks", tasks)
-
-            request.setAttribute("user", user);
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
-            rd.include(request,response);
-            rd.forward(request,response);
-            response.sendRedirect("login.jsp");
-//            RequestDispatcher rd = context.getRequestDispatcher("/login");
-//            rd.include(request, response);
-//            request.getRequestDispatcher("/login.jsp").forward(request, response);
-        }
+        request.setAttribute("user", user);
+        request.setAttribute("tasks", tasks);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
+        rd.include(request,response);
+        rd.forward(request,response);
+        response.sendRedirect("login.jsp");
     }
+}

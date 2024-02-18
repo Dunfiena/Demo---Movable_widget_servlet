@@ -8,16 +8,13 @@ import java.util.List;
 
 public interface taskDao {
 
-    public int insert (Task task) throws SQLException;
-    public int update (Task task) throws SQLException;
-    public int delete (Task taskId) throws SQLException;
+    public void insert (int userId, String taskName, String duedate, String description) throws SQLException;
+    public void update (int taskId, String taskName, String description, String dueDate) throws SQLException, ClassNotFoundException;
+    public void delete (int taskId) throws SQLException, ClassNotFoundException;
     public Task select (int taskId) throws SQLException;
 
     public ArrayList<Task> selectAll() throws SQLException;
 
     ArrayList<Task> selectAll(int userId) throws SQLException;
-
-    public List<Task> insert () throws SQLException;
-
 
 }

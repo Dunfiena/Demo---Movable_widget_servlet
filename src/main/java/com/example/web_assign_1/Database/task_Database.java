@@ -13,22 +13,28 @@ public class task_Database implements taskDao {
 
     private static final String SQL_SELECT = "SELECT * FROM task";
     private static final String SQL_SELECT_ONE = "SELECT * FROM task WHERE taskId = ?";
-    private static final String SQL_INSERT = "INSERT INTO task(taskId, userId, taskName, description, dateAdded, dueDate, PositionX, PositionY) VALUES (?,?,?,?,?,?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE task SET userId=?, taskName=?, description=?, dateAdded=?, dueDate?, PositionX=?, PositionY=? WHERE taskId = ?";
+    private static final String SQL_INSERT = "INSERT INTO task(userId, taskName, description, dateAdded, dueDate) VALUES (?,?,?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE task SET taskName=?, description=?, dueDate=? WHERE taskId = ?";
     private static final String SQL_DELETE = "DELETE FROM task WHERE taskId = ?";
+
     @Override
-    public int insert(Task task) throws SQLException {
-        return 0;
+    public void update(int taskId, String taskName, String description, String dueDate) throws SQLException, ClassNotFoundException {
+        Connection conn = getConnection();
+        PreparedStatement stmt = conn.prepareStatement(SQL_UPDATE);
+        stmt.setString(1, taskName);
+        stmt.setString(2, description);
+        stmt.setString(3, dueDate);
+        stmt.setInt(4, taskId);
+
+        stmt.executeUpdate();
     }
 
     @Override
-    public int update(Task task) throws SQLException {
-        return 0;
-    }
-
-    @Override
-    public int delete(Task taskId) throws SQLException {
-        return 0;
+    public void delete(int taskId) throws SQLException, ClassNotFoundException {
+        Connection conn = getConnection();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM task WHERE userId=?");
+        stmt.setInt(1, taskId);
+        stmt.executeUpdate();
     }
 
     @Override
@@ -40,12 +46,12 @@ public class task_Database implements taskDao {
             Task task = null;
             while (rs.next()) {
                 task = (new Task(
-                        rs.getInt(0),
                         rs.getInt(1),
-                        rs.getString(2),
+                        rs.getInt(2),
                         rs.getString(3),
-                        rs.getTimestamp(4),
-                        rs.getString(5))
+                        rs.getString(4),
+                        rs.getTimestamp(5),
+                        rs.getString(6))
                 );
             }
             return task;
@@ -66,16 +72,16 @@ public class task_Database implements taskDao {
         try {
             Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement("select * from task where userId=?");
-            stmt.setString(1, String.valueOf(userId));
+            stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Task t = new Task(
-                        rs.getInt(0),
                         rs.getInt(1),
-                        rs.getString(2),
+                        rs.getInt(2),
                         rs.getString(3),
-                        rs.getTimestamp(4),
-                        rs.getString(5));
+                        rs.getString(4),
+                        rs.getTimestamp(5),
+                        rs.getString(6));
                 tasks.add(t);
             }
             return tasks;
@@ -86,7 +92,7 @@ public class task_Database implements taskDao {
     }
 
     @Override
-    public List<Task> insert() throws SQLException {
+    public void insert(int userId, String taskName, String duedate, String description) throws SQLException {
         Connection conn = null;
         PreparedStatement pStatement = null;
         ResultSet rs = null;
@@ -95,25 +101,16 @@ public class task_Database implements taskDao {
 
         try{
             conn = getConnection();
-            pStatement = conn.prepareStatement(SQL_SELECT);
-            rs = pStatement.executeQuery();
+            pStatement = conn.prepareStatement("INSERT INTO task(userId, taskName, description, dueDate) VALUES (?,?,?,?)");
+            pStatement.setInt(1, userId);
+            pStatement.setString(2,taskName);
+            pStatement.setString(3,description);
+            pStatement.setString(4,duedate);
 
-            while (rs.next()){
-
-                tasks.add(new Task(
-                        rs.getInt("taskId"),
-                        rs.getInt("userId"),
-                        rs.getString("taskName"),
-                        rs.getString("description"),
-                        rs.getTimestamp("dateAdded"),
-                        rs.getString("dueDate"))
-                );
-                System.out.println(tasks.get(0));
-            }
-
-        }catch (Exception ex){
-            System.out.println("Error:" + ex.getMessage());
+            pStatement.executeUpdate();
+            } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return null;
+
     }
 }

@@ -1,12 +1,17 @@
 {box-sizing: border-box;}
 
-/* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
     background-color: rgba(255, 0, 0, 0.5);
     color: White;
     font-size: 1.5em;
-    width: 75px;
-    height: 75px;
+    width: 66px;
+    height: 66px;
+}
+.button-window{
+    width: 100px;
+    height: 100px;
+    border: #04AA6D 15px;
+    background: black;
 }
 
 /* The popup form - hidden by default */

@@ -1,7 +1,4 @@
-<%@ page import="com.example.web_assign_1.HelloServlet" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<% HelloServlet h = new HelloServlet(); %>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,17 +12,28 @@
         <title>Tsk*AP</title>
     </head>
     <style>
-        .draggable { width: 200px; height: 125px; padding: 5px; float: left; font-size: .9em; }
+        .draggable { width: 250px; height: 125px; padding: 5px; float: left; font-size: 0.9em; }
         .ui-widget-header p, .ui-widget-content p { margin: 0; }
     </style>
     <script>
         $( function() {
             $( ".draggable" ).draggable({ grid: [ 20, 20 ] });
         } );
-        function openLoginForm() {document.getElementById("myloginForm").style.display = "block";}
-        function closeLoginForm() {document.getElementById("myloginForm").style.display = "none";}
-        function openRegForm() {document.getElementById("myRegForm").style.display = "block";}
-        function closeRegForm() {document.getElementById("myRegForm").style.display = "none";}
+        function toggleLoginForm() {
+            let x = document.getElementById("myloginForm");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+        function toggleRegForm() {
+            let x = document.getElementById("myRegForm")
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }}
 
     </script>
     <body>
@@ -35,7 +43,9 @@
 
     <!-- Login Button -->
     <div class="draggable">
-        <button class="open-button" onclick="openLoginForm()">Login</button>
+        <div class="button-window">
+            <button class="open-button" onclick="toggleLoginForm()">Login</button>
+        </div>
         <!-- The form -->
         <div class="form-popup" id="myloginForm">
             <form class="form-container" method="post" action="login">
@@ -48,7 +58,7 @@
                 <input type="password" placeholder="Enter Password" name="hashpass" required>
                 </label>
                 <button type="submit" class="btn">Login</button>
-                <button type="button" class="btn cancel" onclick="closeLoginForm()">Close</button>
+                <button type="button" class="btn cancel" onclick="toggleLoginForm()">Close</button>
             </form>
         </div>
     </div>
@@ -56,7 +66,7 @@
 
     <!-- Register button -->
     <div class="draggable">
-        <button class="open-button" onclick="openRegForm()">Regi<br>ster</button>
+        <button class="open-button" onclick="toggleRegForm()">Regi<br>ster</button>
 
         <!-- The form -->
         <div class="form-popup" id="myRegForm">
@@ -66,11 +76,14 @@
                 <label><b>Username</b>
                 <input type="text" placeholder="Enter user name" name="username" required>
                 </label>
+                <label><b>Email</b>
+                    <input type="text" placeholder="Enter email" name="email" required>
+                </label>
                 <label><b>Password</b>
-                <input type="password" placeholder="Enter Password" name="psw" required>
+                <input type="password" placeholder="Enter Password" name="password" required>
                 </label>
                 <button type="submit" class="btn">Register</button>
-                <button type="button" class="btn cancel" onclick="closeRegForm()">Close</button>
+                <button type="button" class="btn cancel" onclick="toggleRegForm()">Close</button>
             </form>
         </div>
     </div>

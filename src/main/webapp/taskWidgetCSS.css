@@ -1,0 +1,49 @@
+.widget-main-body{
+    width: 100%;
+    display: flex;
+    height: 100%;
+}
+.widget_left{
+    width: 88%;
+    height: 100%;
+}
+.widget_right{
+    width: 10%;
+    margin-left: 1%;
+    height: 100%;
+
+}
+.task_header{
+    font-size: 1.5em;
+    color: beige;
+    background: brown;
+    width: 100%;
+    height: 30%;
+}
+.dueDate{
+    font-size: 1em;
+    color: rgba(245, 245, 220, 0.75);
+    background: rgba(165, 42, 42, 0.75);
+    width: 100%;
+    height: 10%;
+
+}
+
+.description{
+    font-size: 1.125em;
+    background: rgba(245, 245, 220, 0.66);
+    color: rgba(38, 6, 6, 0.75);
+    width: 100%;
+    height: 60%;
+}
+.sideBar{
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    background: rgba(245, 245, 220, 0.66);
+}
+.sideBar_Text{
+    font-size: 1.5em;
+    color: beige;
+    background: brown;
+}
