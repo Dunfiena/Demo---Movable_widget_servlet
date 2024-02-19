@@ -1,6 +1,8 @@
 package com.example.web_assign_1.Model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.sql.Date;
@@ -9,6 +11,7 @@ import java.sql.Timestamp;
 @Entity
 public class Task {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int taskId;
     private int userId;
     private String taskName;

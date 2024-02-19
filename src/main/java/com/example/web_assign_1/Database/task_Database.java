@@ -20,7 +20,7 @@ public class task_Database implements taskDao {
     @Override
     public void update(int taskId, String taskName, String description, String dueDate) throws SQLException, ClassNotFoundException {
         Connection conn = getConnection();
-        PreparedStatement stmt = conn.prepareStatement(SQL_UPDATE);
+        PreparedStatement stmt = conn.prepareStatement("UPDATE task SET taskName=?, description=?, dueDate=? WHERE taskId=?");
         stmt.setString(1, taskName);
         stmt.setString(2, description);
         stmt.setString(3, dueDate);
@@ -32,13 +32,13 @@ public class task_Database implements taskDao {
     @Override
     public void delete(int taskId) throws SQLException, ClassNotFoundException {
         Connection conn = getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM task WHERE userId=?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM `task` WHERE `taskId`=?");
         stmt.setInt(1, taskId);
-        stmt.executeUpdate();
+        stmt.execute();
     }
 
     @Override
-    public Task select(int taskId) throws SQLException {
+    public Task select(int taskId) {
         try {
             Connection conn = getConnection();
             Statement stmt = conn.createStatement();

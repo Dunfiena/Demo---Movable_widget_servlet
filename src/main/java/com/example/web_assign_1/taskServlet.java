@@ -13,11 +13,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class taskServlet extends HttpServlet {
 
     public void init() {
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -84,6 +84,7 @@ public class taskServlet extends HttpServlet {
     }
 
     protected void deleteTask(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException, ClassNotFoundException {
+        request.removeAttribute("tasks");
         int taskId = Integer.parseInt(request.getParameter("taskID"));
         int userId = Integer.parseInt(request.getParameter("userID"));
 
@@ -106,18 +107,17 @@ public class taskServlet extends HttpServlet {
 
     protected void updateTask(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int taskId = Integer.parseInt(request.getParameter("taskID"));
-        String taskname = request.getParameter("taskname");
-        String dueDate = request.getParameter("dueDate");
-        String description = request.getParameter("description");
+        String taskname = request.getParameter("E_taskName");
+        String dueDate = request.getParameter("E_dueDate");
+        String description = request.getParameter("E_description");
         int userId = Integer.parseInt(request.getParameter("userID"));
-
+        request.removeAttribute("tasks");
         task_Database tdb = new task_Database();
         try {
             tdb.update(taskId, taskname, description, dueDate);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         user_Database udb = new user_Database();
         User user = udb.select(userId);
 

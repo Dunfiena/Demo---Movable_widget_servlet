@@ -3,6 +3,7 @@
 <%@ page import="com.example.web_assign_1.Model.Task" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page language="java" session="true" %>
+
 <%  User user = (User)request.getAttribute("user");
     ArrayList<Task> tasks = new ArrayList<>();
     tasks = (ArrayList<Task>)request.getAttribute("tasks");%>
@@ -93,7 +94,26 @@
         }
     }
 
-    function expandTask(id){
+    function expandTask(id, text1, text2, text3){
+        let x = document.getElementById(id);
+        let t1 = document.getElementById(text1);
+        let t2 = document.getElementById(text2);
+        let t3 = document.getElementById(text3);
+
+        if (x.style.width === "300px"){
+            x.style.width = "500px"
+            x.style.height = "300px"
+            t1.style.fontSize = "2vw"
+            t2.style.fontSize = "1.5vw"
+            t3.style.fontSize = "1.625vw"
+
+        }else{
+            x.style.width = "300px"
+            x.style.height = "150px"
+            t1.style.fontSize = "1.5vw"
+            t2.style.fontSize = "1vw"
+            t3.style.fontSize = "1.125vw"
+        }
 
     }
 
@@ -114,23 +134,23 @@
 <div class="draggable ui-widget-content" id="widget2<%=task.getTaskId()%>">
     <div class="widget-main-body">
         <div class="widget_left" id="widget<%=task.getTaskId()%>">
-            <div class="task_header" >
+            <div class="task_header" id="taskName<%=task.getTaskId()%>">
                 Task Name: <%=task.getTaskName()%>
             </div>
-            <div class="dueDate">
+            <div class="dueDate" id="dueDate<%=task.getTaskId()%>">
                 Due Date: <%=task.getDueDate()%>
             </div>
-            <div class="description">
+            <div class="description" id="description<%=task.getTaskId()%>">
                 Description: <br><%=task.getDescription()%>
             </div>
         </div>
         <div class="widget_right" id="widget3<%=task.getTaskId()%>">
             <div class="sideBar">
                 <span class="sideBar_Text" id="widgetTitle<%=task.getTaskId()%>"></span>
-                <button class="sideBar_button" type="button" onclick="removeTask(<%=task.getTaskId()%>)"> A </button>
+                <button class="sideBar_button" type="button" onclick="removeTask(<%=task.getTaskId()%>)"> D </button>
                 <button class="sideBar_button" type="button" onclick='minimize("widget<%=task.getTaskId()%>", "widget2<%=task.getTaskId()%>", "widget3<%=task.getTaskId()%>", "widgetTitle<%=task.getTaskId()%>", "<%=task.getTaskName()%>")'> M </button>
                 <button class="sideBar_button" type="button" onclick="editTask(<%=task.getTaskId()%>)"> U </button>
-                <button class="sideBar_button" type="button" onclick="expandTask('widget<%=task.getTaskId()%>')"> E </button>
+                <button class="sideBar_button" type="button" onclick='expandTask("widget2<%=task.getTaskId()%>","taskName<%=task.getTaskId()%>", "dueDate<%=task.getTaskId()%>","description<%=task.getTaskId()%>", )'> E </button>
             </div>
         </div>
     </div>
@@ -186,7 +206,7 @@
     </div>
 </div>
 
-<!-- update tasks -->
+<!-- edit tasks -->
 <div class="draggable">
     <!-- The form -->
     <div class="form-popup" id="editTask">
@@ -196,15 +216,15 @@
             <input type="hidden" name="userID" value="<%=user.getUser_id()%>"/>
 
             <label><b>Task Name</b>
-                <input type="text" placeholder="Enter task name" name="taskname" required>
+                <input type="text" placeholder="Enter task name" name="E_taskName" required>
             </label>
 
             <label><b>Due Date</b>
-                <input type="text" placeholder="Enter due date" name="dueDate" required>
+                <input type="text" placeholder="Enter due date" name="E_dueDate" required>
             </label>
 
             <label><b>Task Description</b>
-                <input type="text" placeholder="Enter description" name="description" required>
+                <input type="text" placeholder="Enter description" name="E_description" required>
             </label>
             <button type="submit" class="btn">Edit Task</button>
             <button type="button" class="btn cancel" onclick="toggleEditTask()">Close</button>
