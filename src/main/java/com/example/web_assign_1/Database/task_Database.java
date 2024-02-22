@@ -95,7 +95,6 @@ public class task_Database implements taskDao {
     public void insert(int userId, String taskName, String duedate, String description) throws SQLException {
         Connection conn = null;
         PreparedStatement pStatement = null;
-        ResultSet rs = null;
 
         List<Task> tasks = new ArrayList<>();
 

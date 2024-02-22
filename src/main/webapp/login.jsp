@@ -41,6 +41,7 @@
     }
 
     function toggleAddForm() {
+        console.log("ok")
         let x = document.getElementById("addTask");
         if (x.style.display === "none") {
             x.style.display = "block";

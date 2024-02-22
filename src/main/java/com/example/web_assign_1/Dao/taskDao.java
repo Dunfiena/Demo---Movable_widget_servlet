@@ -12,9 +12,7 @@ public interface taskDao {
     public void update (int taskId, String taskName, String description, String dueDate) throws SQLException, ClassNotFoundException;
     public void delete (int taskId) throws SQLException, ClassNotFoundException;
     public Task select (int taskId) throws SQLException;
-
     public ArrayList<Task> selectAll() throws SQLException;
-
     ArrayList<Task> selectAll(int userId) throws SQLException;
 
 }
