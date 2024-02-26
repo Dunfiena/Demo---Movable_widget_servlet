@@ -19,22 +19,29 @@ public class task_Database implements taskDao {
 
     @Override
     public void update(int taskId, String taskName, String description, String dueDate) throws SQLException, ClassNotFoundException {
-        Connection conn = getConnection();
-        PreparedStatement stmt = conn.prepareStatement("UPDATE task SET taskName=?, description=?, dueDate=? WHERE taskId=?");
-        stmt.setString(1, taskName);
-        stmt.setString(2, description);
-        stmt.setString(3, dueDate);
-        stmt.setInt(4, taskId);
+        Connection conn = null;
+        PreparedStatement stmt = null;
 
-        stmt.executeUpdate();
+        try {
+            conn = getConnection();
+            stmt = conn.prepareStatement("UPDATE task SET taskName=?, description=?, dueDate=? WHERE taskId=?;");
+            stmt.setString(1, taskName);
+            stmt.setString(2, description);
+            stmt.setString(3, dueDate);
+            stmt.setInt(4, taskId);
+
+            stmt.executeUpdate();
+        }catch (Exception ex) {
+            System.out.println("Error:" + ex.getMessage());
+        }
     }
 
     @Override
-    public void delete(int taskId) throws SQLException, ClassNotFoundException {
+    public void delete(int taskId) throws ClassNotFoundException, SQLException {
         Connection conn = getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM `task` WHERE `taskId`=?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM task WHERE taskId=?;");
         stmt.setInt(1, taskId);
-        stmt.execute();
+        stmt.executeUpdate();
     }
 
     @Override

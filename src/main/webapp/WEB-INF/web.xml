@@ -45,6 +45,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>editTask</servlet-name>
-        <url-pattern>/editTask</url-pattern>
+        <url-pattern>/updateTask</url-pattern>
     </servlet-mapping>
 </web-app>

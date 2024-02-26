@@ -60,7 +60,7 @@
     }
     function removeTask(id){
         let x = document.getElementById("deleteTask");
-        document.getElementById("delTaskId").innerHTML=id
+        document.getElementById("delTaskId").value=id
         if (x.style.display === "none") {
             x.style.display = "block";
         } else {
@@ -87,7 +87,7 @@
 
     function editTask(id){
         let x = document.getElementById("editTask");
-        document.getElementById("editTaskID").innerHTML=id
+        document.getElementById("editTaskID").value=id
         if (x.style.display === "none") {
             x.style.display = "block";
         } else {
@@ -211,7 +211,7 @@
 <div class="draggable">
     <!-- The form -->
     <div class="form-popup" id="editTask">
-        <form method="post" class="form-container" action="editTask">
+        <form method="post" class="form-container" action="updateTask">
             <h1>Update<br>Task</h1>
             <input type="hidden" id="editTaskID" name="taskID"/>
             <input type="hidden" name="userID" value="<%=user.getUser_id()%>"/>
